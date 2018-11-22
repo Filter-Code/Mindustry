@@ -191,6 +191,7 @@ public class SettingsMenuDialog extends SettingsDialog{
         });
 
         graphics.sliderPref("fpscap", 125, 5, 125, 5, s -> (s > 120 ? Bundles.get("setting.fpscap.none") : Bundles.format("setting.fpscap.text", s)));
+        graphics.checkPref("fog",true);//by default select fog of war
         graphics.checkPref("multithread", mobile, threads::setEnabled);
 
         if(Settings.getBool("multithread")){
