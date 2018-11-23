@@ -1,5 +1,16 @@
 package io.anuke.mindustry.graphics;
 
+import static io.anuke.mindustry.Vars.mapPadding;
+import static io.anuke.mindustry.Vars.playerGroup;
+import static io.anuke.mindustry.Vars.players;
+import static io.anuke.mindustry.Vars.renderer;
+import static io.anuke.mindustry.Vars.threads;
+import static io.anuke.mindustry.Vars.tilesize;
+import static io.anuke.mindustry.Vars.unitGroups;
+import static io.anuke.mindustry.Vars.world;
+
+import java.nio.ByteBuffer;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,6 +21,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+
 import io.anuke.mindustry.entities.Unit;
 import io.anuke.mindustry.game.EventType.TileChangeEvent;
 import io.anuke.mindustry.game.EventType.WorldLoadGraphicsEvent;
@@ -17,14 +29,11 @@ import io.anuke.mindustry.world.Tile;
 import io.anuke.ucore.core.Core;
 import io.anuke.ucore.core.Events;
 import io.anuke.ucore.core.Graphics;
+import io.anuke.ucore.core.Settings;
 import io.anuke.ucore.entities.EntityDraw;
 import io.anuke.ucore.graphics.Draw;
 import io.anuke.ucore.graphics.Fill;
 import io.anuke.ucore.scene.utils.ScissorStack;
-
-import java.nio.ByteBuffer;
-
-import static io.anuke.mindustry.Vars.*;
 
 /**Used for rendering fog of war. A framebuffer is used for this.*/
 public class FogRenderer implements Disposable{
@@ -107,9 +116,15 @@ public class FogRenderer implements Disposable{
         pixelBuffer.position(0);
         for(int i = 0; i < world.width() * world.height(); i++){
             byte r = pixelBuffer.get();
-            if(r != 0){
+            if(Settings.getBool("fog")){
+                if(r != 0){
+                    world.tile(i).setVisibility((byte)1);
+                }
+            }
+            else{
                 world.tile(i).setVisibility((byte)1);
             }
+            
             pixelBuffer.position(pixelBuffer.position() + 3);
         }
         buffer.end();
