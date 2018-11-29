@@ -151,7 +151,12 @@ public class FogRenderer implements Disposable{
 
         Core.batch.getProjectionMatrix().setToOrtho2D(-padding * tilesize, -padding * tilesize, buffer.getWidth() * tilesize, buffer.getHeight() * tilesize);
 
-        Draw.color(Color.WHITE);
+        float total=Settings.getInt("redvalue")+Settings.getInt("greenvalue")+Settings.getInt("bluevalue");
+        if(Settings.getInt("redvalue")==255 && Settings.getInt("greenvalue")==255 && Settings.getInt("bluevalue")==255)
+            Draw.color(Color.WHITE);
+        else
+            Draw.color(new Color(((float)(Settings.getInt("redvalue")/256f)),((float)(Settings.getInt("greenvalue")/256f)),
+                ((float)(Settings.getInt("bluevalue")/256f)),(total/768f)));
 
         buffer.begin();
 
