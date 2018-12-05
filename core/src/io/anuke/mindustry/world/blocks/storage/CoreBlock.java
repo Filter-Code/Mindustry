@@ -53,7 +53,7 @@ public class CoreBlock extends StorageBlock{
         update = true;
         size = 3;
         hasItems = true;
-        itemCapacity = Settings.getInt("capacitySlider",2000);
+        itemCapacity = Settings.getInt("capacitySlider1",2000);
         viewRange = 200f;
         flags = EnumSet.of(BlockFlag.resupplyPoint, BlockFlag.target);
     }
