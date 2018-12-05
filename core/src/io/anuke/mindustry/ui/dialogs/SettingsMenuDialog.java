@@ -191,9 +191,9 @@ public class SettingsMenuDialog extends SettingsDialog{
         });
 
         graphics.sliderPref("fpscap", 125, 5, 125, 5, s -> (s > 120 ? Bundles.get("setting.fpscap.none") : Bundles.format("setting.fpscap.text", s)));
-        graphics.sliderPref("redvalue",255,0,255,1, s -> (Bundles.format("setting.redvalue.text",s)));
-        graphics.sliderPref("greenvalue",255,0,255,1, s -> (Bundles.format("setting.greenvalue.text",s)));
-        graphics.sliderPref("bluevalue",255,0,255,1, s -> ( Bundles.format("setting.bluevalue.text",s)));
+        graphics.sliderPref("redvalue",255,0,255,1, s -> (Bundles.format("setting.redvalue.text",s)));//red value slider
+        graphics.sliderPref("greenvalue",255,0,255,1, s -> (Bundles.format("setting.greenvalue.text",s)));//green value slider
+        graphics.sliderPref("bluevalue",255,0,255,1, s -> ( Bundles.format("setting.bluevalue.text",s)));//blue value slider
         graphics.checkPref("fog",true);//by default select fog of war
         graphics.checkPref("multithread", mobile, threads::setEnabled);
 

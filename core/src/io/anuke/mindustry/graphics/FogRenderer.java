@@ -1,13 +1,6 @@
 package io.anuke.mindustry.graphics;
 
-import static io.anuke.mindustry.Vars.mapPadding;
-import static io.anuke.mindustry.Vars.playerGroup;
-import static io.anuke.mindustry.Vars.players;
-import static io.anuke.mindustry.Vars.renderer;
-import static io.anuke.mindustry.Vars.threads;
-import static io.anuke.mindustry.Vars.tilesize;
-import static io.anuke.mindustry.Vars.unitGroups;
-import static io.anuke.mindustry.Vars.world;
+import static io.anuke.mindustry.Vars.*;
 
 import java.nio.ByteBuffer;
 
@@ -116,13 +109,13 @@ public class FogRenderer implements Disposable{
         pixelBuffer.position(0);
         for(int i = 0; i < world.width() * world.height(); i++){
             byte r = pixelBuffer.get();
-            if(Settings.getBool("fog")){
+            if(Settings.getBool("fog")){ //if fog of war option selected set visible the tiles that has been discovered.
                 if(r != 0){
                     world.tile(i).setVisibility((byte)1);
                 }
             }
             else{
-                world.tile(i).setVisibility((byte)1);
+                world.tile(i).setVisibility((byte)1);//if fog of war option is not selected make all tiles be visible
             }
             
             pixelBuffer.position(pixelBuffer.position() + 3);
@@ -150,7 +143,7 @@ public class FogRenderer implements Disposable{
         float v2 = ((py + vh) / tilesize + padding) / buffer.getHeight();
 
         Core.batch.getProjectionMatrix().setToOrtho2D(-padding * tilesize, -padding * tilesize, buffer.getWidth() * tilesize, buffer.getHeight() * tilesize);
-
+        //by default make the color white otherwise make color with values taken from color sliders
         float total=Settings.getInt("redvalue")+Settings.getInt("greenvalue")+Settings.getInt("bluevalue");
         if(Settings.getInt("redvalue")==255 && Settings.getInt("greenvalue")==255 && Settings.getInt("bluevalue")==255)
             Draw.color(Color.WHITE);
