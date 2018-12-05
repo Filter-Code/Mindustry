@@ -19,6 +19,7 @@ import io.anuke.ucore.core.Timers;
 import io.anuke.ucore.graphics.Draw;
 import io.anuke.ucore.graphics.Fill;
 import io.anuke.ucore.util.Mathf;
+import io.anuke.ucore.core.Settings;
 
 import static io.anuke.mindustry.Vars.*;
 
@@ -42,7 +43,7 @@ public class Smelter extends Block{
         update = true;
         hasItems = true;
         solid = true;
-        itemCapacity = 20;
+        itemCapacity = Settings.getInt("capacitySlider2",20);
 
         consumes.require(ConsumeItems.class);
         consumes.require(ConsumeItem.class);

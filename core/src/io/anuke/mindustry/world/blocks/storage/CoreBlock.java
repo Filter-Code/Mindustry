@@ -34,6 +34,8 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
+import io.anuke.ucore.core.Settings;
+
 import static io.anuke.mindustry.Vars.*;
 
 public class CoreBlock extends StorageBlock{
@@ -51,7 +53,7 @@ public class CoreBlock extends StorageBlock{
         update = true;
         size = 3;
         hasItems = true;
-        itemCapacity = 2000;
+        itemCapacity = Settings.getInt("capacitySlider1",2000);
         viewRange = 200f;
         flags = EnumSet.of(BlockFlag.resupplyPoint, BlockFlag.target);
     }

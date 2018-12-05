@@ -152,6 +152,11 @@ public class SettingsMenuDialog extends SettingsDialog{
         //game.sliderPref("sensitivity", 100, 10, 300, i -> i + "%");
 
         game.sliderPref("saveinterval", 60, 10, 5 * 120, i -> Bundles.format("setting.seconds", i));
+        
+        game.sliderPref("capacitySlider1", 2000, 100, 4000, i -> i+"");
+        game.sliderPref("capacitySlider2", 20, 10, 40, i -> i+"");
+        game.sliderPref("capacitySlider3", 1000, 100, 2000, i -> i+"");
+
         game.pref(new Setting(){
             @Override
             public void add(SettingsTable table){

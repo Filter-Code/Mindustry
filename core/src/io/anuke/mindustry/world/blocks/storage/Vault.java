@@ -1,4 +1,5 @@
 package io.anuke.mindustry.world.blocks.storage;
+import io.anuke.ucore.core.Settings;
 
 public class Vault extends StorageBlock{
 
@@ -7,7 +8,7 @@ public class Vault extends StorageBlock{
         solid = true;
         update = false;
         destructible = true;
-        itemCapacity = 1000;
+        itemCapacity = Settings.getInt("capacitySlider3",1000);
     }
 
 }
