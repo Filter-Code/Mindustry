@@ -46,6 +46,7 @@ public class HudFragment extends Fragment{
     private float coreAttackTime;
     private float lastCoreHP;
     private float coreAttackOpacity = 0f;
+    private long start=System.currentTimeMillis();
 
     public void build(Group parent){
 
@@ -171,6 +172,15 @@ public class HudFragment extends Fragment{
                 float curr = state.teams.get(players[0].getTeam()).cores.first().entity.health;
                 if(!Float.isNaN(lastCoreHP) && curr < lastCoreHP){
                     coreAttackTime = notifDuration;
+                    if(Settings.getBool("showHP")){
+                     if(System.currentTimeMillis()-start>1000){
+                        t.table("clear");
+                        t.table("clear", top -> top.add("COREHP:"+curr).pad(6)
+                         .update(label -> label.setColor(Hue.mix(Color.ORANGE, Color.SCARLET, Mathf.absin(Timers.time(), 2f, 1f)))));
+                        t.table("clear"); 
+                         start=System.currentTimeMillis();
+                        }
+                    }
                 }
                 lastCoreHP = curr;
 

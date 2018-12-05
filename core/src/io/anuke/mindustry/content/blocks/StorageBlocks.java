@@ -5,6 +5,7 @@ import io.anuke.mindustry.world.Block;
 import io.anuke.mindustry.world.blocks.storage.CoreBlock;
 import io.anuke.mindustry.world.blocks.storage.SortedUnloader;
 import io.anuke.mindustry.world.blocks.storage.Vault;
+import io.anuke.ucore.core.Settings;
 
 public class StorageBlocks extends BlockList implements ContentList{
     public static Block core, vault, container, unloader;
@@ -12,7 +13,8 @@ public class StorageBlocks extends BlockList implements ContentList{
     @Override
     public void load(){
         core = new CoreBlock("core"){{
-            health = 1100;
+          health = Settings.getInt("HPBoost",1100);
+        
         }};
 
         vault = new Vault("vault"){{

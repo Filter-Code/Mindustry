@@ -141,11 +141,16 @@ public class SettingsMenuDialog extends SettingsDialog{
         sound.volumePrefs();
         game.screenshakePref();
         //game.checkPref("smoothcam", true);
+        //targeted
+        game.checkPref("showHP", false);
+        game.sliderPref("HPBoost",1100, 1100, 10000, i -> Bundles.format("setting.health", i));
+
         game.checkPref("effects", true);
         if(mobile){
             game.checkPref("autotarget", true);
         }
         //game.sliderPref("sensitivity", 100, 10, 300, i -> i + "%");
+
         game.sliderPref("saveinterval", 60, 10, 5 * 120, i -> Bundles.format("setting.seconds", i));
         game.pref(new Setting(){
             @Override
