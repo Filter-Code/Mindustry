@@ -1,5 +1,9 @@
 package io.anuke.mindustry.graphics;
 
+import static io.anuke.mindustry.Vars.*;
+
+import java.nio.ByteBuffer;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+
 import io.anuke.mindustry.entities.Unit;
 import io.anuke.mindustry.game.EventType.TileChangeEvent;
 import io.anuke.mindustry.game.EventType.WorldLoadGraphicsEvent;
@@ -17,14 +22,11 @@ import io.anuke.mindustry.world.Tile;
 import io.anuke.ucore.core.Core;
 import io.anuke.ucore.core.Events;
 import io.anuke.ucore.core.Graphics;
+import io.anuke.ucore.core.Settings;
 import io.anuke.ucore.entities.EntityDraw;
 import io.anuke.ucore.graphics.Draw;
 import io.anuke.ucore.graphics.Fill;
 import io.anuke.ucore.scene.utils.ScissorStack;
-
-import java.nio.ByteBuffer;
-
-import static io.anuke.mindustry.Vars.*;
 
 /**Used for rendering fog of war. A framebuffer is used for this.*/
 public class FogRenderer implements Disposable{
@@ -107,9 +109,15 @@ public class FogRenderer implements Disposable{
         pixelBuffer.position(0);
         for(int i = 0; i < world.width() * world.height(); i++){
             byte r = pixelBuffer.get();
-            if(r != 0){
-                world.tile(i).setVisibility((byte)1);
+            if(Settings.getBool("fog")){ //if fog of war option selected set visible the tiles that has been discovered.
+                if(r != 0){
+                    world.tile(i).setVisibility((byte)1);
+                }
             }
+            else{
+                world.tile(i).setVisibility((byte)1);//if fog of war option is not selected make all tiles be visible
+            }
+            
             pixelBuffer.position(pixelBuffer.position() + 3);
         }
         buffer.end();
@@ -135,8 +143,13 @@ public class FogRenderer implements Disposable{
         float v2 = ((py + vh) / tilesize + padding) / buffer.getHeight();
 
         Core.batch.getProjectionMatrix().setToOrtho2D(-padding * tilesize, -padding * tilesize, buffer.getWidth() * tilesize, buffer.getHeight() * tilesize);
-
-        Draw.color(Color.WHITE);
+        //by default make the color white otherwise make color with values taken from color sliders
+        float total=Settings.getInt("redvalue")+Settings.getInt("greenvalue")+Settings.getInt("bluevalue");
+        if(Settings.getInt("redvalue")==255 && Settings.getInt("greenvalue")==255 && Settings.getInt("bluevalue")==255)
+            Draw.color(Color.WHITE);
+        else
+            Draw.color(new Color(((float)(Settings.getInt("redvalue")/256f)),((float)(Settings.getInt("greenvalue")/256f)),
+                ((float)(Settings.getInt("bluevalue")/256f)),(total/768f)));
 
         buffer.begin();
 
